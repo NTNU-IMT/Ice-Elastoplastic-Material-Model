@@ -20,7 +20,7 @@ C
       real g,twomu, M, N, eps0
       real p1,p2,prse,p,I1,I2,I1e,diff
       real J2,J2e,sj2f,yieldf,dlambda,eps_eh,denom
-      
+C      
       dimension props(nprops), density(nblock), coordMp(nblock,*),
      1 charLength(nblock), strainInc(nblock,ndir+nshr),
      2 relSpinInc(nblock,nshr), tempOld(nblock),
@@ -85,7 +85,6 @@ C
       bulk=e/(3.0*(1.0-2.0*xnu))
       alambda =  twomu*xnu/(one-2*xnu)    ! 1st Lame parameter
       ntens	 = ndir+nshr
-
 C
       p1=(-a1+sqrt(a1**2.0-4.0*a0*a2))/(a2*2.0)
       p2=(-a1-sqrt(a1**2.0-4.0*a0*a2))/(a2*2.0)
@@ -192,26 +191,26 @@ C
               stateNew(i,11)=eps_mean-eps_eh
               stateNew(i,8)=prse
               stateNew(i,9)=diff
-              
+C             
               did(1:ndir)=(a1+2.0*a2*prse)/3.0+stress_deve(1:ndir)
               did(1+ndir:ntens)=stress_deve(1+ndir:ntens)
-              
+C              
 C     Criteria between plastic loading and elastic unloading 
               stateNew(i,17)=sum((bulk*eps_mean*9.0/3.0+twomu*strain_dev(1:ndir))*did(1:ndir))+
      2        sum(twomu*strain_dev(1+ndir:ntens)*did(1+ndir:ntens))
 C------------------Calculating the equivalent plastic strain incrementally-----------------------------      
               stateNew(i,7)=stateOld(i,7)+sqrt(2.0/3.0*(sum(stateNew(i,1:ndir)**2.)+
      2        + 2.*sum(stateNew(i,1+ndir:ntens)**2.)))
-
+C
               eps_fail=eps0+(prse/(M*p2)-(N/M))**2.0
-
+C
 C     if damages starts, initial failure strain is kept              
               if (stateOld(i,27).gt.0.0) then
                   stateNew(i,12) = stateOld(i,12)
               else
                   stateNew(i,12) = eps_fail
               endif
-              
+C              
 C---------------------------------Damage stage judgement-----------------------------                
               if (stateNew(i,7).gt.stateNew(i,12)) then
 C     Initial failure stress components
