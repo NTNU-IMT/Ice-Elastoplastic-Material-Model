@@ -34,7 +34,7 @@ c
       parameter(M = 1.0)
       parameter(N = 0.75)
       parameter(Pcut = -2.0)
-c
+C
       jStatus = 1
       call vgetvrm( 'S', rData, jData, cData, jStatus )
 c
